@@ -15,25 +15,71 @@
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <div class="card-body">
-                            <form role="form" action="{{ route('book.store') }}" method="POST">
+                            <form role="form" action="{{ route('book.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Path Buku" aria-label="Email" name="path_buku" required>
+                                    <label for="path_buku" class="form-label">Choose a book photo</label>
+                                    <input type="file" class="form-control form-control-lg @error('path_buku') is-invalid @enderror" aria-label="Email" name="path_buku" id="path_buku" accept="image/jpeg, image/png, image/gif">
+                                    @error('path_buku')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Title Book" aria-label="Email" name="judul_buku" required>
+                                    <label for="judul_buku" class="form-label">Title Book</label>
+                                    <input type="text" class="form-control form-control-lg  @error('judul_buku') is-invalid @enderror" placeholder="Title Book" aria-label="Email" name="judul_buku" id="judul_buku" value="{{ old('judul_buku') }}">
+                                    @error('judul_buku')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control form-control-lg" placeholder="Publication Year" aria-label="Publication Year" name="tahun_terbit" min="1900" max="2023" required>
+                                    <label for="tahun_terbit" class="form-label">Publication Year</label>
+                                    <input type="number" class="form-control form-control-lg @error('tahun_terbit') is-invalid @enderror" placeholder="Publication Year" aria-label="Publication Year" name="tahun_terbit" value="{{ old('tahun_terbit') }}">
+                                    @error('tahun_terbit')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control form-control-lg" placeholder="ISBN" aria-label="ISBN" name="isbn" required>
+                                    <label for="isbn" class="form-label">ISBN</label>
+                                    <input type="text" class="form-control form-control-lg @error('isbn') is-invalid @enderror" placeholder="ISBN" aria-label="ISBN" name="isbn" value="{{ old('isbn') }}">
+                                    @error('isbn')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control form-control-lg" placeholder="Id Pengarang" aria-label="Email" name="id_pengarang" required>
+                                    <label for="id_pengarang" class="form-label">Authors Name</label>
+                                    <select class="form-select form-select-lg @error('id_pengarang') is-invalid @enderror" name="id_pengarang" id="id_pengarang">
+                                        <option value="">Choose Author</option>
+                                        @foreach($authors as $author)
+                                            <option value="{{ $author->id }}" @if(old('id_pengarang') == $author->id) selected @endif>{{ $author->nama_pengarang }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_pengarang')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control form-control-lg" placeholder="Id Kategori" aria-label="Email" name="id_kategori" required>
+                                    <label for="id_kategori" class="form-label">Category Name</label>
+                                    <select class="form-select form-select-lg @error('id_kategori') is-invalid @enderror" name="id_kategori" id="id_kategori">
+                                        <option value="">Choose Category</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" @if(old('id_kategori') == $category->id) selected @endif>{{ $category->nama_kategori }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_kategori')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Add</button>
@@ -45,38 +91,6 @@
             </div>
         </div>
     </div>
-    <footer class="footer pt-3  ">
-        <div class="container-fluid">
-            <div class="row align-items-center justify-content-lg-between">
-                <div class="col-lg-6 mb-lg-0 mb-4">
-                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                        © <script>
-                            document.write(new Date().getFullYear())
-                        </script>,
-                        made with <i class="fa fa-heart"></i> by
-                        <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                        for a better web.
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
 </div>
 
 @endsection

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Exception;
 use App\Models\Kategori;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class KategoriController extends Controller
 {
@@ -12,6 +15,10 @@ class KategoriController extends Controller
      */
     public function index()
     {
+        if (Auth::user() == null)
+        {
+            return view("auth.login");
+        }
         $kategori = Kategori::all();
         return view("kategori.index", compact("kategori"));
     }
@@ -29,8 +36,22 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_kategori' => [
+                'required',
+                'unique:tb_kategori,nama_kategori',
+                'regex:/^[A-Za-z\s]+$/',
+            ],
+            'deskripsi_kategori' => 'required',
+        ], [
+            'nama_kategori.required' => 'The category name is required.',
+            'nama_kategori.unique' => 'The category name is already in use. Please enter a different category name.',
+            'nama_kategori.regex' => 'The category name should contain only letters and spaces.',
+            'deskripsi_kategori.required' => 'The category description is required.',
+        ]);
+
         Kategori::create($request->all());
-        return redirect()->route('kategori')->with("success","");
+        return redirect()->route('kategori')->with("success","Category data has been successfully added.");
     }
 
     /**
@@ -56,17 +77,50 @@ class KategoriController extends Controller
     public function update(Request $request, string $id)
     {
         $kategori = Kategori::find($id);
-        $kategori->updated($request->all());
-        return redirect()->route('kategori')->with("success","");
+
+        // Cek apakah data yang akan diedit sama dengan data yang ada
+        if (
+            $request->nama_kategori == $kategori->nama_kategori &&
+            $request->deskripsi_kategori == $kategori->deskripsi_kategori
+        ) {
+            return redirect()->back()->with("error", html_entity_decode("The data you're trying to edit is the same as before."));
+        }
+
+        $request->validate([
+            'nama_kategori' => [
+                'required',
+                'regex:/^[A-Za-z\s]+$/',
+                Rule::unique('tb_kategori', 'nama_kategori')->ignore($kategori->id),
+            ],
+            'deskripsi_kategori' => 'required',
+        ], [
+            'nama_kategori.required' => 'The category name is required.',
+            'nama_kategori.unique' => 'The category name is already in use. Please enter a different category name.',
+            'nama_kategori.regex' => 'The category name should contain only letters and spaces.',
+            'deskripsi_kategori.required' => 'The category description is required.',
+        ]);
+
+        // Jika data yang akan diedit berbeda, proses pembaruan
+        $kategori->update($request->all());
+
+        return redirect()->route('kategori')->with("success", "Category data has been successfully updated.");
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $kategori= Kategori::find($id);
-        $kategori->delete();
-        return redirect()->route("kategori")->with("success","");
+        try{
+
+            $kategori= Kategori::find($id);
+            $kategori->delete();
+            return redirect()->route("kategori")->with("success","Category data has been successfully deleted.");
+        }
+
+        catch (Exception $e) {
+            return back()->with("warning", "Failed because it is currently in use");
+        }
     }
 }

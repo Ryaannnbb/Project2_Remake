@@ -5,9 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="{{ asset('assets/img/logos/logo.png') }}">
   <title>
-    Argon Dashboard 2 by Creative Tim
+    Project 2 Blitaryan Endi Pratama
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -46,7 +46,7 @@
               <form role="form" method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="mb-3">
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" aria-label="Name" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" aria-label="Name" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>
                     @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" aria-label="Email" name="email" value="{{ old('email') }}" required autocomplete="email">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" aria-label="Email" name="email" value="{{ old('email') }}" autocomplete="email">
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" aria-label="Password" name="password" required autocomplete="new-password">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" aria-label="Password" name="password" autocomplete="new-password">
                     @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -70,7 +70,12 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <input type="password" class="form-control" placeholder="Re-Password" aria-label="Password" name="password_confirmation" required autocomplete="new-password">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Re-Password" aria-label="Password" name="password_confirmation" autocomplete="new-password">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>

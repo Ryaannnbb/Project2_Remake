@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('judul_buku', 100);
             $table->year('tahun_terbit');
             $table->string('isbn', 30);
-            $table->integer('id_pengarang');
-            $table->integer('id_kategori');
+            $table->foreignId('id_pengarang')->constrained('tb_pengarang')->restrictOnDelete();
+            $table->foreignId('id_kategori')->constrained('tb_kategori')->restrictOnDelete();
             $table->timestamps();
         });
     }

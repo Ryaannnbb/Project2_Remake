@@ -18,13 +18,25 @@
                             <form role="form" action="{{ route('peminjam.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Borrower Name" aria-label="Email" name="nama_peminjam" required>
+                                    <label for="nama_peminjam" class="form-label">Borrower Name</label>
+                                    <input type="text" class="form-control form-control-lg @error('nama_peminjam') is-invalid @enderror" placeholder="Borrower Name" aria-label="Email" name="nama_peminjam" value="{{ old('nama_peminjam') }}">
+                                    @error('nama_peminjam')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Address" aria-label="Email" name="alamat" required>
+                                    <label for="alamat" class="form-label">Address</label>
+                                    <textarea class="form-control form-control-lg @error('alamat') is-invalid @enderror" placeholder="Address" aria-label="Email" name="alamat">{{ old('alamat') }}</textarea>
+                                    @error('alamat')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control form-control-lg" placeholder="Year of birth" aria-label="Email" name="no_telepon" required maxlength="12">
+                                    <label for="no_telepon" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control form-control-lg @error('no_telepon') is-invalid @enderror" placeholder="Phone Number" aria-label="Phone Number" name="no_telepon" value="{{ old('no_telepon') }}">
+                                    @error('no_telepon')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Add</button>
@@ -36,38 +48,6 @@
             </div>
         </div>
     </div>
-    <footer class="footer pt-3  ">
-        <div class="container-fluid">
-            <div class="row align-items-center justify-content-lg-between">
-                <div class="col-lg-6 mb-lg-0 mb-4">
-                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                        © <script>
-                            document.write(new Date().getFullYear())
-                        </script>,
-                        made with <i class="fa fa-heart"></i> by
-                        <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                        for a better web.
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
 </div>
 
 @endsection

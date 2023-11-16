@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tb_transaksi', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_buku');
-            $table->integer('id_peminjam');
+            $table->foreignId('id_buku')->constrained('tb_buku')->restrictOnDelete();
+            $table->foreignId('id_peminjam')->constrained('tb_peminjam')->restrictOnDelete();
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_pengembalian');
             $table->timestamps();

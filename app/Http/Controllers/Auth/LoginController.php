@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class LoginController extends Controller
 {
@@ -36,5 +39,36 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        if ($request->input('remember')) {
+            $request->session()->put('email', $request->input('email'));
+        }
+
+        if ($this->attemptLogin($request)) {
+            // Login sukses, simpan pesan sukses dalam session
+            session()->flash('success', 'Login berhasil!');
+            return $this->sendLoginResponse($request);
+        }
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            Auth::logout();
+            return view('auth.login')->with([
+                'success' => 'Logout berhasil!',
+            ]);
+        } catch (\Throwable $th) {
+            return back();
+        }
     }
 }

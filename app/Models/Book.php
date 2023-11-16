@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
@@ -13,9 +15,20 @@ class Book extends Model
     protected $fillable = [
         "path_buku",
         "judul_buku",
-        "tahun_terbit",
+        "tahun_terbit", 
         "isbn",
         "id_pengarang",
         "id_kategori"
     ];
+
+    public function author(): BelongsTo  // return type data
+    {
+        return $this->belongsTo(Pengarang::class, "id_pengarang");
+    }
+
+    public function kategori(): BelongsTo // return type data
+    {
+        return $this->belongsTo(Kategori::class, "id_kategori");
+    }
+
 }

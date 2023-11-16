@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\BookController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PengarangController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\PeminjamController;
-use App\Http\Controllers\TransaksiController;
+use Illuminate\Support\Facades\Auth; // Menggunakan Facade Auth untuk otentikasi
+use Illuminate\Support\Facades\Route; // Menggunakan Facade Route untuk mendefinisikan rute
+use App\Http\Controllers\BookController; // Menggunakan BookController untuk mengelola buku
+use App\Http\Controllers\KategoriController; // Menggunakan KategoriController untuk mengelola kategori
+use App\Http\Controllers\PeminjamController; // Menggunakan PeminjamController untuk mengelola peminjam
+use App\Http\Controllers\DashboardController; // Menggunakan DashboardController untuk mengelola dashboard
+use App\Http\Controllers\PengarangController; // Menggunakan PengarangController untuk mengelola pengarang
+use App\Http\Controllers\TransaksiController; // Menggunakan TransaksiController untuk mengelola transaksi
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->middleware('check')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('book', [BookController::class, 'index'])->name('book.index');
+    Route::get('pengarang', [PengarangController::class, 'index'])->name('pengarang.index');
+    Route::get('kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('peminjam', [PeminjamController::class, 'index'])->name('peminjam.index');
+    Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+});
 
 Route::controller(BookController::class)->prefix('book')->group(function () {
     Route::get('', 'index')->name('book');
