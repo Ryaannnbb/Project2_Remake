@@ -23,6 +23,12 @@
                     <br>
                     <h4 class="mt-5 text-white font-weight-bolder position-relative">"A library is a treasure trove of knowledge."</h4>
                     <p class="text-white position-relative">In the silence of a library, you can discover worlds, unravel mysteries, and explore the depths of human wisdom.</p>
+                    <h4 class="mt-5 text-white font-weight-bolder position-relative">"A library is a treasure trove of knowledge."</h4>
+                    <p class="text-white position-relative">In the silence of a library, you can discover worlds, unravel mysteries, and explore the depths of human wisdom.</p>
+                    <h4 class="mt-5 text-white font-weight-bolder position-relative">"A library is a treasure trove of knowledge."</h4>
+                    <p class="text-white position-relative">In the silence of a library, you can discover worlds, unravel mysteries, and explore the depths of human wisdom.</p>
+                    <h4 class="mt-5 text-white font-weight-bolder position-relative">"A library is a treasure trove of knowledge."</h4>
+                    <p class="text-white position-relative">In the silence of a library, you can discover worlds, unravel mysteries, and explore the depths of human wisdom.</p>
                     <br>
                     <br>
                     <br>
