@@ -13,5 +13,4 @@ class Pengarang extends Model
         "nama_pengarang",
         "tahun_kelahiran"
     ];
-
 }
