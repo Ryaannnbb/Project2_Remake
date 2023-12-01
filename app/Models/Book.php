@@ -15,7 +15,7 @@ class Book extends Model
     protected $fillable = [
         "path_buku",
         "judul_buku",
-        "tahun_terbit", 
+        "tahun_terbit",
         "isbn",
         "id_pengarang",
         "id_kategori"
